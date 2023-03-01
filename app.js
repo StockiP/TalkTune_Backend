@@ -6,11 +6,20 @@ var logger = require('morgan');
 var openAI = require('openai');
 var bp = require('body-parser');
 var basicAuth = require('express-basic-auth');
+var mariadb = require('mariadb');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+var pool = mariadb.createPool({
+    host: process.env.DBHOST,
+    user: process.env.DBUSER,
+    password: process.env.DBPASSWORD,
+    database: process.env.DATABASE,
+    connectionLimit: 5
+});
 
 var { Configuration, OpenAIApi } = require("openai");
 var configuration = new Configuration({
@@ -50,6 +59,52 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get('/health', (req, res) => {
+    async function connectForHealthEndpoint() {
+        let conn;
+        try {
+            conn = await pool.getConnection();
+            const rows = await conn.query("SELECT * FROM `Survey`;") // query database using conn.query
+            console.log(rows);
+            res.send('OK');
+        } catch (err) {
+            res.send('ERROR');
+            throw err;
+        } finally {
+            if (conn) await conn.end();
+        }
+    }
+    connectForHealthEndpoint();
+});
+
+app.post('/survey/submit', (req, res) => {
+    var survey = req.body.survey;
+    var R1 = req.body.survey.R1;
+    var R2 = req.body.survey.R2;
+    var R3 = req.body.survey.R3;
+    var R4 = req.body.survey.R4;
+    var R5 = req.body.survey.R5;
+    var R6 = req.body.survey.R6;
+    var R7 = req.body.survey.R7;
+    var R8 = req.body.survey.R8;
+    var R9 = req.body.survey.R9;
+    async function connectForSurveySubmit() {
+        let conn;
+        try {
+            conn = await pool.getConnection();
+            await conn.query("INSERT INTO `Survey` (`R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `R8`, `R9`) VALUES ('" + R1 + "', '" + R2 + "', '" + R3 + "', '" + R4 + "', '" + R5 + "', '" + R6 + "', '" + R7 + "', '" + R8 + "', '" + R9 + "');"); // query database using conn.query
+            res.send('OK - survey submitted');
+        } catch (err) {
+            res.send('ERROR');
+            console.log(err)
+            throw err;
+        } finally {
+            if (conn) await conn.end();
+        }
+    }
+    connectForSurveySubmit();
 });
 
 app.post('/sentiment/short/eng', (req, res) => {
