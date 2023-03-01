@@ -14,7 +14,7 @@ var app = express();
 
 var { Configuration, OpenAIApi } = require("openai");
 var configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAIAPIKEY,
 });
 var openai = new OpenAIApi(configuration);
 
@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(basicAuth({
-    users: { 'admin': process.env.USAGE_SECRET },
+    users: { 'admin': process.env.USAGESECRET },
 }));
 
 
