@@ -193,5 +193,23 @@ app.post('/rephrase/eng', (req, res) => {
         });
 });
 
+app.post('/rephrase/ger', (req, res) => {
+    var message = req.body.message;
+    var tone = req.body.tone;
+    openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: "Formuliere folgendes neu, um" + tone + " zu klingen:" + message + "\nNeu formuliert:",
+        max_tokens: 3000,
+        temperature: 0.7,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0
+    })
+        .then(response => {
+            console.log(response);
+            res.send(response.data.choices[0]);
+        });
+});
+
 
 module.exports = app;
