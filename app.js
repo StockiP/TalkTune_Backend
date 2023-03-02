@@ -50,7 +50,6 @@ app.use(cors({
     optionsSuccessStatus: 204
 }));
 
-
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
