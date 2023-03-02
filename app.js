@@ -7,6 +7,7 @@ var openAI = require('openai');
 var bp = require('body-parser');
 var basicAuth = require('express-basic-auth');
 var mariadb = require('mariadb');
+var cors = require('cors');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
@@ -40,6 +41,10 @@ app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(basicAuth({
     users: { 'admin': process.env.USAGESECRET },
+}));
+
+app.use(cors({
+    origin: '*', // allow to server to accept request from different origin
 }));
 
 
