@@ -39,15 +39,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
-app.use(basicAuth({
+/*app.use(basicAuth({
     users: { 'admin': process.env.USAGESECRET },
-}));
+}));*/
 
 app.use(cors({
     origin: '*', // allow to server to accept request from different origin
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue: false,
-    optionsSuccessStatus: 204
+    optionsSuccessStatus: 200
 }));
 
 app.use('/', indexRouter);
@@ -86,7 +86,9 @@ app.get('/health', (req, res) => {
     connectForHealthEndpoint();
 });
 
-app.post('/survey/submit', (req, res) => {
+app.post('/survey/submit', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
     var survey = req.body.survey;
     var R1 = req.body.survey.R1;
     var R2 = req.body.survey.R2;
@@ -114,7 +116,9 @@ app.post('/survey/submit', (req, res) => {
     connectForSurveySubmit();
 });
 
-app.post('/sentiment/short/eng', (req, res) => {
+app.post('/sentiment/short/eng', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
   var message = req.body.message;
   openai.createCompletion({
     model: "text-davinci-003",
@@ -131,7 +135,9 @@ app.post('/sentiment/short/eng', (req, res) => {
       });
 });
 
-app.post('/sentiment/long/eng', (req, res) => {
+app.post('/sentiment/long/eng', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
     var message = req.body.message;
     openai.createCompletion({
         model: "text-davinci-003",
@@ -148,7 +154,9 @@ app.post('/sentiment/long/eng', (req, res) => {
         });
 });
 
-app.post('/sentiment/short/ger', (req, res) => {
+app.post('/sentiment/short/ger', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
     var message = req.body.message;
     openai.createCompletion({
         model: "text-davinci-003",
@@ -165,7 +173,9 @@ app.post('/sentiment/short/ger', (req, res) => {
         });
 });
 
-app.post('/sentiment/long/ger', (req, res) => {
+app.post('/sentiment/long/ger', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
     var message = req.body.message;
     openai.createCompletion({
         model: "text-davinci-003",
@@ -182,7 +192,9 @@ app.post('/sentiment/long/ger', (req, res) => {
         });
 });
 
-app.post('/rephrase/eng', (req, res) => {
+app.post('/rephrase/eng', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
     var message = req.body.message;
     var tone = req.body.tone;
     openai.createCompletion({
@@ -200,7 +212,9 @@ app.post('/rephrase/eng', (req, res) => {
         });
 });
 
-app.post('/rephrase/ger', (req, res) => {
+app.post('/rephrase/ger', basicAuth({
+    users: { 'admin': process.env.USAGESECRET }, challenge: false}
+), (req, res) => {
     var message = req.body.message;
     var tone = req.body.tone;
     openai.createCompletion({
@@ -217,6 +231,5 @@ app.post('/rephrase/ger', (req, res) => {
             res.send(response.data.choices[0]);
         });
 });
-
 
 module.exports = app;
