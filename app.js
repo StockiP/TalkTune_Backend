@@ -45,6 +45,9 @@ app.use(basicAuth({
 
 app.use(cors({
     origin: '*', // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204
 }));
 
 
