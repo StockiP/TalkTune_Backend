@@ -97,13 +97,11 @@ app.post('/survey/submit', basicAuth({
     var R5 = req.body.survey.R5;
     var R6 = req.body.survey.R6;
     var R7 = req.body.survey.R7;
-    var R8 = req.body.survey.R8;
-    var R9 = req.body.survey.R9;
     async function connectForSurveySubmit() {
         let conn;
         try {
             conn = await pool.getConnection();
-            await conn.query("INSERT INTO `Survey` (`R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `R8`, `R9`) VALUES ('" + R1 + "', '" + R2 + "', '" + R3 + "', '" + R4 + "', '" + R5 + "', '" + R6 + "', '" + R7 + "', '" + R8 + "', '" + R9 + "');"); // query database using conn.query
+            await conn.query("INSERT INTO `Survey` (`R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`) VALUES ('" + R1 + "', '" + R2 + "', '" + R3 + "', '" + R4 + "', '" + R5 + "', '" + R6 + "', '" + R7 + "');"); // query database using conn.query
             res.send('OK - survey submitted');
         } catch (err) {
             res.send('ERROR');
