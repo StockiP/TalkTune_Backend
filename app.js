@@ -123,7 +123,7 @@ app.post('/sentiment/short/eng', basicAuth({
   openai.createCompletion({
     model: "text-davinci-003",
     prompt: "Perform short sentiment analysis:" + message + "\nSentiment:",
-    max_tokens: 3000,
+    max_tokens: 3500,
     temperature: 0.7,
     top_p: 1,
     frequency_penalty: 0,
@@ -142,7 +142,7 @@ app.post('/sentiment/long/eng', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Perform sentiment analysis, explain your decision:" + message + "\nSentiment & Explanation:",
-        max_tokens: 3000,
+        max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -161,7 +161,7 @@ app.post('/sentiment/short/ger', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Führe eine kurze Sentimentanalyse durch:" + message + "\nSentiment:",
-        max_tokens: 3000,
+        max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -180,7 +180,7 @@ app.post('/sentiment/long/ger', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Führe eine Sentimentanalyse durch und erkläre deine Entscheidung:" + message + "\nSentiment & Erklärung:",
-        max_tokens: 3000,
+        max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -200,7 +200,7 @@ app.post('/rephrase/eng', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Rephrase to be more" + tone + ":" + message + "\nRephrased:",
-        max_tokens: 3000,
+        max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -220,7 +220,7 @@ app.post('/rephrase/ger', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Formuliere folgendes neu, um" + tone + " zu klingen:" + message + "\nNeu formuliert:",
-        max_tokens: 3000,
+        max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
