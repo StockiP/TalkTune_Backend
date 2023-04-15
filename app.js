@@ -97,11 +97,17 @@ app.post('/survey/submit', basicAuth({
     var R5 = req.body.survey.R5;
     var R6 = req.body.survey.R6;
     var R7 = req.body.survey.R7;
+    var R8 = req.body.survey.R8;
+    var R9 = req.body.survey.R9;
+    var R10 = req.body.survey.R10;
+    var R11 = req.body.survey.R11;
+    var R12 = req.body.survey.R12;
+    var R13 = req.body.survey.R13;
     async function connectForSurveySubmit() {
         let conn;
         try {
             conn = await pool.getConnection();
-            await conn.query("INSERT INTO `Survey` (`R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`) VALUES ('" + R1 + "', '" + R2 + "', '" + R3 + "', '" + R4 + "', '" + R5 + "', '" + R6 + "', '" + R7 + "');"); // query database using conn.query
+            await conn.query("INSERT INTO `Survey` (`R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `R8`, `R9`, `R10`, `R11`, `R12`, `R13`) VALUES ('" + R1 + "', '" + R2 + "', '" + R3 + "', '" + R4 + "', '" + R5 + "', '" + R6 + "', '" + R7 + "', '" + R8 + "', '" + R9 +"', '" + R10 +"', '" + R11 +"', '" + R12 +"', '" + R13 +"');"); // query database using conn.query
             res.send('OK - survey submitted');
         } catch (err) {
             res.send('ERROR');
@@ -139,7 +145,7 @@ app.post('/sentiment/long/eng', basicAuth({
     var message = req.body.message;
     openai.createCompletion({
         model: "text-davinci-003",
-        prompt: "Perform sentiment analysis, explain your decision:" + message + "\nSentiment & Explanation:",
+        prompt: "Perform sentiment analysis on the provided message and provide an overall sentiment label as well as a breakdown by specific aspects of the conversation (e.g. tone, core statement, entities). Use a five-point scale to rate sentiment, where very negative, somewhat negative, neutral, somewhat positive, and very positive are the five possible labels. Additionally, provide context for the sentiment and discuss any limitations or biases in the analysis, such as potential misinterpretation of tone. Analyze the key message of the message and possible misunderstandings:" + message,
         max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
@@ -197,7 +203,7 @@ app.post('/rephrase/eng', basicAuth({
     var tone = req.body.tone;
     openai.createCompletion({
         model: "text-davinci-003",
-        prompt: "Rephrase to be more" + tone + ":" + message + "\nRephrased:",
+        prompt: "Rephrase the following message to use a more" +tone+ "tone while keeping the core message:" + message,
         max_tokens: 3500,
         temperature: 0.7,
         top_p: 1,
