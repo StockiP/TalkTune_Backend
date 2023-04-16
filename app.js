@@ -127,7 +127,7 @@ app.post('/sentiment/short/eng', basicAuth({
   openai.createCompletion({
     model: "text-davinci-003",
     prompt: "Perform short sentiment analysis:" + message + "\nSentiment:",
-    max_tokens: 3500,
+    max_tokens: 2000,
     temperature: 0.7,
     top_p: 1,
     frequency_penalty: 0,
@@ -146,7 +146,7 @@ app.post('/sentiment/long/eng', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Perform sentiment analysis on the provided message and provide an overall sentiment label as well as a breakdown by specific aspects of the conversation (e.g. tone, core statement, entities). Use a five-point scale to rate sentiment, where very negative, somewhat negative, neutral, somewhat positive, and very positive are the five possible labels. Additionally, provide context for the sentiment and discuss any limitations or biases in the analysis, such as potential misinterpretation of tone. Analyze the key message of the message and possible misunderstandings:" + message,
-        max_tokens: 3500,
+        max_tokens: 2000,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -184,7 +184,7 @@ app.post('/sentiment/long/ger', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Führe eine Sentimentanalyse durch und erkläre deine Entscheidung:" + message + "\nSentiment & Erklärung:",
-        max_tokens: 3500,
+        max_tokens: 2000,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -204,7 +204,7 @@ app.post('/rephrase/eng', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Rephrase the following message to use a more" +tone+ "tone while keeping the core message:" + message,
-        max_tokens: 3500,
+        max_tokens: 2000,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
@@ -224,7 +224,7 @@ app.post('/rephrase/ger', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Formuliere folgendes neu, um" + tone + " zu klingen:" + message + "\nNeu formuliert:",
-        max_tokens: 3500,
+        max_tokens: 2000,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
