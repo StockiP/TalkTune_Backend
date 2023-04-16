@@ -165,7 +165,7 @@ app.post('/sentiment/short/ger', basicAuth({
     openai.createCompletion({
         model: "text-davinci-003",
         prompt: "Führe eine kurze Sentimentanalyse durch:" + message + "\nSentiment:",
-        max_tokens: 3500,
+        max_tokens: 2000,
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
